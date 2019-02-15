@@ -8,6 +8,8 @@ public class Deck {
     private Rank rank = new Rank();
     private Suit suit = new Suit();
     private ArrayList<Card> deck = new ArrayList<>();
+    ArrayList<Card> handTwo = new ArrayList<>(26);
+    ArrayList<Card> handOne = new ArrayList<>(26);
 
 
 
@@ -33,31 +35,101 @@ public class Deck {
 
 
     public ArrayList<Card> makeFirstHand(){
-        ArrayList<Card> handOne = new ArrayList<>(26);
+
+        makeADeck();
+
+        shuffleDeck();
 
         for(int i = 0; i < deck.size(); i++){
             handOne.add(deck.get(i));
-            deck.remove(i);
+               deck.remove(i);
         }
 
-        System.out.println("Make Player Ones Pile of " + handOne.size() + " cards;");
-        return handOne;
+        return deck;
     }
 
 
     public ArrayList<Card> makeSecondHand(){
+        ArrayList<Card> leftOverDeck = makeFirstHand();
 
 
-        ArrayList<Card> handTwo = new ArrayList<>(26);
-        for(int i = 0; i < deck.size(); i++){
+        for(int i = 0; i < leftOverDeck.size(); i++){
 
-            handTwo.add(deck.get(i));
+            handTwo.add(leftOverDeck.get(i));
         }
 
-        System.out.println("Made Player Two's hand of " + handTwo.size() + " cards.");
         return handTwo;
     }
 
+    public void printFirstHand(){
+        System.out.println("Hand One :" + handOne.size() + " cards \n");
+        for(Card c : handOne){
+            System.out.println(c + "\n");
+        }
+    }
+
+    public void printSecondHand(){
+        System.out.println("Hand Two :" + handTwo.size() + " cards. \n");
+        for(Card c : handTwo){
+            System.out.println(c +  "\n");
+        }
+    }
+
+    public Card getP1FirstCard(){
+
+        Card c = handOne.get(0);
+
+        return c;
+
+    }
+
+
+    public Card getP2FirstCard(){
+
+        Card c = handTwo.get(0);
+
+        return c;
+    }
+
+
+
+    public void addToP1Hand(Card c){
+        handOne.add(c);
+    }
+
+    public void addToP2Hand(Card c){
+
+        handTwo.add(c);
+    }
+
+
+    public int getCardNumericalValueAtFirstIndexValue(String rank){
+
+        int card = 0;
+
+
+        if(rank.equalsIgnoreCase("jack")){
+
+            card = 11;
+
+        } else if(rank.equalsIgnoreCase("queen")){
+            card =12;
+
+        } else if (rank.equalsIgnoreCase("king")){
+
+            card =13;
+
+        } else if(rank.equalsIgnoreCase("ace")){
+            card = 1;
+        }
+            else {
+
+            card = Integer.parseInt(rank);
+        }
+
+        return card;
+
+    }
 
 
 }
